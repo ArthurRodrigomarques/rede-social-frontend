@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import {
   Sheet,
@@ -12,6 +11,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { Textarea } from "./ui/textarea"
+import { ContextMenu, ContextMenuTrigger } from "./ui/context-menu"
  
 export function CreateNewPost() {
   return (
@@ -19,7 +19,7 @@ export function CreateNewPost() {
       <SheetTrigger asChild>
         <Button variant="outline">Criar postagem</Button>
       </SheetTrigger>
-      <SheetContent>
+      <SheetContent className="w-[100%]">
         <SheetHeader>
           <SheetTitle>Criar Nova Postagem</SheetTitle>
           <SheetDescription>
@@ -27,22 +27,28 @@ export function CreateNewPost() {
           </SheetDescription>
         </SheetHeader>
         <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
+          <div className="grid  items-center gap-4">
+            <Label htmlFor="name" className="text-left">
               Descrição
             </Label><br />
-            <Textarea id="name" placeholder="Escreva sua mensagem aqui!" className="col-span-3 w-90" />
+            <Textarea id="name" placeholder="Escreva sua postagem aqui!" className="col-span-3 h-44 w-[100%] resize-y" />
           </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="username" className="text-right">
-              Username
+          <div className=" gap-6">
+            <Label htmlFor="username" className="text-right inline-block">
+              Foto
             </Label>
-            <Input id="username" value="@peduarte" className="col-span-3" />
+            <br />
+            <ContextMenu>
+      <ContextMenuTrigger className="flex h-[150px] cursor-pointer w-[320px] lg:w-[100%] mt-4 items-center justify-center rounded-md border border-dashed text-sm">
+        Right click here
+      </ContextMenuTrigger>
+
+    </ContextMenu>
           </div>
         </div>
         <SheetFooter>
           <SheetClose asChild>
-            <Button type="submit">Save changes</Button>
+            <Button className="mr-4" type="submit">Enviar</Button>
           </SheetClose>
         </SheetFooter>
       </SheetContent>
