@@ -8,7 +8,7 @@ export default function DashboardLayout({
   }) {
     return (
       <section className="min-h-screen flex flex-col" >
-        <div className="flex max-w-[100%] justify-between mt-4 ml-20 mr-20">
+        <div className="flex w-[100%] bg-secondary justify-between pt-4 pb-4 pl-20 pr-20 fixed">
         <div>
             LOGO
         </div>
