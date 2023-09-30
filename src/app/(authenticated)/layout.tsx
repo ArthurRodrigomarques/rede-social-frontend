@@ -1,4 +1,5 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { ThemeToggle } from "@/components/ThemeToggle"
+import { ThemeProvider } from "@/components/theme-provider"
 import UserNav from "@/components/user-nav"
 
 export default function DashboardLayout({
@@ -8,11 +9,14 @@ export default function DashboardLayout({
   }) {
     return (
       <section className="min-h-screen flex flex-col" >
-        <div className="flex w-[100%] bg-secondary justify-between pt-4 pb-4 pl-20 pr-20 fixed">
+        <div className="flex w-[100%] bg-secondary justify-between pt-4 pb-2 pl-20 pr-20 fixed">
         <div>
             LOGO
         </div>
-        <div className="">
+        <div>
+          <ThemeToggle/>
+        </div>
+        <div>
             <UserNav/>
         </div>
         </div>
