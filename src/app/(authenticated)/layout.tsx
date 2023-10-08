@@ -1,5 +1,4 @@
 import { ThemeToggle } from "@/components/ThemeToggle"
-import { ThemeProvider } from "@/components/theme-provider"
 import UserNav from "@/components/user-nav"
 
 export default function DashboardLayout({

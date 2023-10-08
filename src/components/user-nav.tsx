@@ -1,3 +1,5 @@
+"use client"
+
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
 import { DropdownMenu,
@@ -8,7 +10,17 @@ import { DropdownMenu,
          DropdownMenuSeparator, 
          DropdownMenuTrigger } from "./ui/dropdown-menu";
 
+import Cookie from "js-cookie";
+import { useRouter } from "next/navigation";
+
 export default function UserNav() {
+  const router = useRouter()
+
+  function handleLogout() {
+    Cookie.remove('auth_token')
+    router.push("/")
+  }
+
     return (
         <DropdownMenu>
         <DropdownMenuTrigger asChild>
@@ -38,7 +50,7 @@ export default function UserNav() {
             </DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>
+          <DropdownMenuItem onClick={handleLogout}>
             Sair
           </DropdownMenuItem>
         </DropdownMenuContent>

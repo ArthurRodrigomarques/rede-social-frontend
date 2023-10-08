@@ -10,8 +10,16 @@ import { Card,
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
+import { useForm } from "react-hook-form"
 
 export default function CreateAccount() {
+    const { register, handleSubmit } = useForm()
+
+    function handleSignIn(data: any): void {
+      console.log(data);
+    }
+    
+
     return (
         <div className="flex justify-center items-center h-screen w-screen">
         <Card className="mb-28">
@@ -21,6 +29,7 @@ export default function CreateAccount() {
             Enter your email below to create your account
           </CardDescription>
         </CardHeader>
+
         <CardContent className="grid gap-4">
           <div className="grid grid-cols-2 gap-6">
             <Button variant="outline">
@@ -40,18 +49,35 @@ export default function CreateAccount() {
               </span>
             </div>
           </div>
+          <form onSubmit={handleSubmit(handleSignIn)} >
           <div className="grid gap-2">
             <Label htmlFor="email">Email</Label>
-            <Input id="email" type="email" placeholder="m@example.com" />
+            <Input 
+                {...register('email')}
+                id="email" 
+                type="email" 
+                autoComplete="email"
+                required
+                placeholder="m@example.com" 
+                />
           </div>
           <div className="grid gap-2">
             <Label htmlFor="password">Password</Label>
-            <Input id="password" type="password" />
+            <Input 
+                {...register('password')}
+                id="password" 
+                type="password"
+                autoComplete="password"
+                required 
+                placeholder="Password"
+                />
           </div>
-        </CardContent>
-        <CardFooter>
+          
+        <CardFooter className="mt-5">
           <Button className="w-full">Create account</Button>
         </CardFooter>
+        </form>
+        </CardContent>
       </Card>
       </div>
     )
