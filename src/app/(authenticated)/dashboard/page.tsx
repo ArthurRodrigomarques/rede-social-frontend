@@ -5,6 +5,7 @@ import { useState } from 'react';
 import Feed from "@/components/Feed";
 import SideBarDashboard from "@/components/SideBarDashboard";
 import Message from '@/components/Message';
+import AllPosts from '@/components/AllPosts';
 
 export default function Dashboard() {
   const [selectedItem, setSelectedItem] = useState<string>("Feed");

@@ -18,13 +18,13 @@ export const api = axios.create({
 
 const accessToken = 'access_token';
 
-setCookie(null, 'access_token', accessToken), {
-  path: '/',
-} 
+// setCookie(null, 'access_token', accessToken), {
+//   path: '/dashboard',
+// } 
 
 export const login = async (loginUser: LoginUser) => {
   try {
-    const response = await api.post('/login', {loginUser});
+    const response = await api.post('/login', loginUser);
     return response.data
   } catch (error) {
     console.log(error)
