@@ -1,6 +1,21 @@
+"use client"
+
+import { login } from "@/services/api";
+import { setToken } from "@/services/auth";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState} from "react"
+import { useForm } from "react-hook-form";
 
 export default function Login() {
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+
+    const { register, handleSubmit } = useForm()
+
+    function handleSignIn(data: any) {
+      console.log(data)
+    }
 
     return (
       <>
@@ -17,15 +32,18 @@ export default function Login() {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" action="#" method="POST">
+          <form 
+            onSubmit={handleSubmit(handleSignIn)}
+            className="space-y-6" 
+            >
             <div>
               <label htmlFor="email" className="block text-sm font-medium leading-6 text-primary">
                 Email address
               </label>
               <div className="mt-2">
                 <input
+                {...register('email')}
                   id="email"
-                  name="email"
                   type="email"
                   placeholder="m@example.com"
                   autoComplete="email"
@@ -48,8 +66,8 @@ export default function Login() {
               </div>
               <div className="mt-2">
                 <input
+                {...register('password')}
                   id="password"
-                  name="password"
                   type="password"
                   placeholder="Senha"
                   autoComplete="current-password"
@@ -60,12 +78,12 @@ export default function Login() {
             </div>
 
             <div>
-              <Link href="/dashboard"
+              <button
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-primary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Sign in
-              </Link>
+              </button>
             </div>
           </form>
 
