@@ -1,32 +1,25 @@
 import axios from 'axios';
-import { parseCookies, setCookie } from 'nookies';
+import { setToken } from './auth';
+import { parseCookies } from "nookies"
 
-type LoginUser = {
-  email: string;
-  password: string;
-}
-
-type CreateUser = {
-  email: string;
-  password: string;
-  name: string;
-}
+const { "auth_token": token } = parseCookies()
 
 export const api = axios.create({
   baseURL: 'http://localhost:4000',
 });
 
-const accessToken = 'access_token';
+if (token) {
+  api.defaults.headers['Authorization'] = `Bearer ${token}`;
+}
 
-// setCookie(null, 'access_token', accessToken), {
-//   path: '/dashboard',
-// } 
-
-export const login = async (loginUser: LoginUser) => {
+export const login = async (email: string, password: string) => {
   try {
-    const response = await api.post('/login', loginUser);
-    return response.data
+    const response = await api.post('/login', {email, password});
+
+    setToken(response.data.token)
+    
+    return response.data;
   } catch (error) {
-    console.log(error)
+    console.error('Erro inesperado:', error);
   }
 }

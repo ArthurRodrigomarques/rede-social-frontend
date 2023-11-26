@@ -1,21 +1,26 @@
 "use client"
 
-import { login } from "@/services/api";
-import { setToken } from "@/services/auth";
+import { AuthContext } from "@/services/AuthContext";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState} from "react"
+import { useContext, useState} from "react"
 import { useForm } from "react-hook-form";
 
+
 export default function Login() {
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
-
+    const router = useRouter()
     const { register, handleSubmit } = useForm()
+    const { isAuthenticated, user, signIn  } = useContext(AuthContext)
 
-    function handleSignIn(data: any) {
-      console.log(data)
-    }
+
+      async function handleSignIn (data: any) {
+        try {
+          await signIn(data)
+        } catch (error) {
+          console.log("Usuário não encontrado",error)
+        }
+        
+      }
 
     return (
       <>
@@ -43,7 +48,6 @@ export default function Login() {
               <div className="mt-2">
                 <input
                 {...register('email')}
-                  id="email"
                   type="email"
                   placeholder="m@example.com"
                   autoComplete="email"
@@ -67,7 +71,6 @@ export default function Login() {
               <div className="mt-2">
                 <input
                 {...register('password')}
-                  id="password"
                   type="password"
                   placeholder="Senha"
                   autoComplete="current-password"

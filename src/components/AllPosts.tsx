@@ -6,7 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { Heart, MessageCircle } from 'lucide-react';
 
 interface MyData {
-    id:          string
+    _id:          string
     title:       string
     description: string
     image:       string
@@ -28,13 +28,12 @@ export default function AllPosts() {
     fetchData();
   }, []);
 
-
   return (
     <div className='w-[100%] h-auto mt-20 block '>
       {data.length > 0 ? (
         <ul className="text-left mt-3 text-sm w-[60%] ml-[20%] mr-[20%] flex flex-col justify-center border-gray-800 ">
           {data.map((item) => (
-            <div className=' ml-6 border  w-[100%]'>
+            <div key={item._id} className=' ml-6 border  w-[100%]'>
               <div className="flex flex-row mb-2 mt-3 ml-4">
                   <Avatar>
                   <AvatarImage className="w-10" src="https://github.com/ArthurRodrigomarques.png" alt="@shadcn" />
@@ -43,7 +42,7 @@ export default function AllPosts() {
                 <h3 className="mt-2 ml-4">Name: tutu</h3>
               </div>
             <div className='ml-12'>
-              <li  key={item.id}>{item.title}</li>
+              <li>{item.title}</li>
               <li className='w-[80%]'>{item.description}</li>
             <img className='mt-5 w-[450px] h-[300px] rounded-3xl' src={item.image} alt={item.description} />
             </div>
