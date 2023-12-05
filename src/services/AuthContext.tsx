@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 
 import { api } from "./api";
 
-export const AuthContext = createContext({} as AuthContextType)
+
 
 type AuthProviderProps = {
   children: ReactNode;
@@ -21,7 +21,6 @@ type User = {
     _id: string;
     name: string;
     email: string;
-    password: string;
 }
 
 type AuthContextType = {
@@ -30,49 +29,80 @@ type AuthContextType = {
     signIn: (data: SignInData) => Promise<void>
   };
 
+export const AuthContext = createContext({} as AuthContextType)
+
 export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User | null>(null)
     const router = useRouter()
 
-
   const isAuthenticated = !!user;
 
-  useEffect(() => {
-    const { "auth_token": token } = parseCookies();
+  // useEffect(() => {
+  //   const userInformation = async () => {
+  //   const {"auth_token": token} = parseCookies()
+  //   const userId = "teste"
+  //  if(token) {
+  //  await api.get(`/user/${userId}`, {
+  //     headers: {
+  //       Authorization: `Bearer ${token}`
+  //     },
+  //   })
+  //   .then(response => {
+  //     setUser(response.data.user); 
+  //     console.log(response.data.user);
+  //   })
+  //   .catch(error => {
+  //     console.error('Erro ao obter informações do usuário:', error);
+  //   });
+  // };
+  //   }
+   
+  //   userInformation()
+  // }, []);
+  
 
-    if (token) {
-      // Substitua 'seuIdDoUsuario' pelo verdadeiro _id do usuário
-      const userId = '655ccd47b5e986657593dcaa';
-      console.log(userId)
-      api.get(`/user/${userId}`, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-      })
-      .then(response => setUser(response.data))
-      .catch(err => console.log(err));
-    }
-  }, []);
-
-
-    async function signIn({email, password}: SignInData) {
-        const response = await api.post('/auth/login',{
+  async function signIn({ email, password }: SignInData) {
+    try {
+        const response = await api.post('/auth/login', { 
             email,
-            password,
-        })
+            password 
+        });
 
-        const { token,  user } = response.data;
+        const { token, user, userId } = response.data;
 
-        setCookie(undefined, 'auth_token', token, {
-            maxAge: 30 * 24 * 60 * 60 //30 days
-        })
+        setCookie(undefined, 'auth_token', token, { 
+            maxAge: 30 * 24 * 60 * 60 // 30 days
+        });
 
         api.defaults.headers['Authorization'] = `Bearer ${token}`;
 
-        setUser(user)
+        console.log('Token:', token);
+        console.log('id:', userId);
 
-        router.push("/dashboard")
+        router.push("/dashboard");
+
+        try {
+            const {"auth_token": token} = parseCookies()
+
+            const userResponse = await api.get(`/user/${userId}`, {
+              headers: {
+                Authorization: `Bearer ${token}`
+                },
+            });
+            
+            setUser(userResponse.data.user);
+            console.log(user)
+        } catch (error) {
+            console.error('Erro ao obter informações do usuário:', error);
+        }
+        console.log("usuario xd", user);
+        
+    } catch (error) {
+        console.error('Erro ao fazer login:', error);
+        // Lide com o erro de autenticação aqui, por exemplo, mostrando uma mensagem ao usuário
     }
+}
+
 
   return (
     <AuthContext.Provider value={{ isAuthenticated, user, signIn }}>
@@ -80,3 +110,5 @@ export function AuthProvider({ children }: AuthProviderProps) {
     </AuthContext.Provider>
   );
 }
+
+
