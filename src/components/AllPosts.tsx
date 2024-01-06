@@ -40,6 +40,7 @@ export default function AllPosts() {
                   <AvatarFallback>SC</AvatarFallback>
                   </Avatar>
                 <h3 className="mt-2 ml-4">Name: tutu</h3>
+         
               </div>
             <div className='ml-12'>
               <li>{item.title}</li>

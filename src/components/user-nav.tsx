@@ -10,13 +10,12 @@ import { DropdownMenu,
          DropdownMenuTrigger } from "./ui/dropdown-menu";
 
 
-import ButtonLogout from "./buttonLogout";
+import ButtonLogout from "./ButtonLogout";
 import { getServerSession } from "next-auth";
 import { nextAuthOptions } from "@/app/api/auth/[...nextauth]/route";
 
 export default async function UserNav() {
   const session = await getServerSession(nextAuthOptions)
-
 
     return (
         <DropdownMenu>
