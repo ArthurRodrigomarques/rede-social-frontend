@@ -1,4 +1,3 @@
-"use client"
 
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
@@ -10,16 +9,14 @@ import { DropdownMenu,
          DropdownMenuSeparator, 
          DropdownMenuTrigger } from "./ui/dropdown-menu";
 
-import Cookie from "js-cookie";
-import { useRouter } from "next/navigation";
 
-export default function UserNav() {
-  const router = useRouter()
+import ButtonLogout from "./buttonLogout";
+import { getServerSession } from "next-auth";
+import { nextAuthOptions } from "@/app/api/auth/[...nextauth]/route";
 
-  function handleLogout() {
-    Cookie.remove('auth_token')
-    router.push("/")
-  }
+export default async function UserNav() {
+  const session = await getServerSession(nextAuthOptions)
+
 
     return (
         <DropdownMenu>
@@ -34,9 +31,9 @@ export default function UserNav() {
         <DropdownMenuContent className="w-56" align="end" forceMount>
           <DropdownMenuLabel className="font-normal">
             <div className="flex flex-col space-y-1">
-              <p className="text-sm font-medium leading-none">tutu</p>
+              <p className="text-sm font-medium leading-none">{session?.userId.name}</p>
               <p className="text-xs leading-none text-muted-foreground">
-                test@example.com
+                {session?.userId.email}
               </p>
             </div>
           </DropdownMenuLabel>
@@ -50,9 +47,7 @@ export default function UserNav() {
             </DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={handleLogout}>
-            Sair
-          </DropdownMenuItem>
+          <ButtonLogout/>
         </DropdownMenuContent>
       </DropdownMenu>
     )

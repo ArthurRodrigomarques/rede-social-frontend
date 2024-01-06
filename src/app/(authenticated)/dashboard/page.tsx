@@ -10,9 +10,6 @@ export default function Dashboard() {
 
   const [selectedItem, setSelectedItem] = useState<string>("Feed");
 
-  // useEffect(() => {
-  //   api.get('/user')
-  // }, [])
 
   return (
     <div>

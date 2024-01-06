@@ -1,27 +1,35 @@
 "use client"
 
-import { AuthContext } from "@/services/AuthContext";
+import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useContext, useState} from "react"
-import { useForm } from "react-hook-form";
+import { SyntheticEvent, useState } from "react";
+
 
 
 export default function Login() {
-    const router = useRouter()
-    const { register, handleSubmit } = useForm()
-    const { isAuthenticated, user, signIn  } = useContext(AuthContext)
 
+  const router = useRouter()
 
-      async function handleSignIn (data: any) {
-        try {
-          await signIn(data)
-        } catch (error) {
-          console.log("Usuário não encontrado",error)
-        }
-        
-      }
+  const [email, setEmail] = useState<string>("")
+  const [password, setPassword] = useState<string>("")
 
+  async function handleSubmit(event: SyntheticEvent) {
+    event.preventDefault()
+
+    const result = await signIn('credentials', {
+      email,
+      password,
+      redirect: false
+    })
+
+    if (result?.error) {
+      console.log(result)
+      return
+    }
+
+    router.replace('/dashboard')
+  }
     return (
       <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -38,7 +46,7 @@ export default function Login() {
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form 
-            onSubmit={handleSubmit(handleSignIn)}
+            onSubmit={handleSubmit}
             className="space-y-6" 
             >
             <div>
@@ -47,11 +55,10 @@ export default function Login() {
               </label>
               <div className="mt-2">
                 <input
-                {...register('email')}
-                  type="email"
+                  type="text"
                   placeholder="m@example.com"
+                  onChange={(e) => setEmail(e.target.value)}
                   autoComplete="email"
-                  required
                   className="block p-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -70,11 +77,10 @@ export default function Login() {
               </div>
               <div className="mt-2">
                 <input
-                {...register('password')}
                   type="password"
                   placeholder="Senha"
+                  onChange={(e) => setPassword(e.target.value)}
                   autoComplete="current-password"
-                  required
                   className="block p-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
