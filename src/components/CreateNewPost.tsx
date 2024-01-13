@@ -24,7 +24,7 @@ export function CreateNewPost() {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button className="fixed ml-10 bottom-10" variant="outline">
+        <Button className="fixed ml-10 bottom-10 left-2 bg-secondary" variant="outline">
           Criar postagem
         </Button>
       </SheetTrigger>

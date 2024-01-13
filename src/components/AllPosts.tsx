@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { Heart, MessageCircle } from 'lucide-react';
+import { CreateNewPost } from './CreateNewPost';
 
 interface MyData {
     _id:          string
@@ -31,7 +32,7 @@ export default function AllPosts() {
   return (
     <div className='w-[100%] h-auto mt-20 block '>
       {data.length > 0 ? (
-        <ul className="text-left mt-3 text-sm w-[60%] ml-[20%] mr-[20%] flex flex-col justify-center border-gray-800 ">
+        <ul className="text-left mt-3 text-sm w-[90%]  md:w-[60%] md:ml-[20%] md:mr-[20%] flex flex-col justify-center border-gray-800 ">
           {data.map((item) => (
             <div key={item._id} className=' ml-6 border  w-[100%]'>
               <div className="flex flex-row mb-2 mt-3 ml-4">
@@ -45,7 +46,7 @@ export default function AllPosts() {
             <div className='ml-12'>
               <li>{item.title}</li>
               <li className='w-[80%]'>{item.description}</li>
-            <img className='mt-5 w-[450px] h-[300px] rounded-3xl' src={item.image} alt={item.description} />
+            <img className='mt-5 w-[280px] md:w-[450px] md:h-[300px] rounded-xl md:rounded-3xl' src={item.image} alt={item.description} />
             </div>
               <div className="mt-1 ml-36 flex flex-row  justify-center gap-16">
                       <MessageCircle className="cursor-pointer w-5 text-gray-600"/>
@@ -58,6 +59,7 @@ export default function AllPosts() {
       ) : (
         <p>Carregando...</p>
       )}
+      <CreateNewPost/>
     </div>
   );
 }

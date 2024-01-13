@@ -4,8 +4,8 @@ import { ToggleGroup, ToggleGroupItem } from "./ui/toggle-group";
 
 export default function SideBar() {
     return (
-        <div className="w-[25%] fixed">
-            <ScrollArea className="">
+        <div className="w-[33%] lg:w-[25%] fixed">
+            <ScrollArea>
             <ToggleGroup type="single" className="flex flex-col">
 
                 <ToggleGroupItem value="a"className="w-[90%] h-16 bg-slate-500 rounded-xl mt-4">

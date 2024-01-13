@@ -29,7 +29,6 @@ export default function RootLayout({
           >
         {children}
         </ThemeProvider>
-        {children}
       </NextAuthSessionProvider>
 
         </body>

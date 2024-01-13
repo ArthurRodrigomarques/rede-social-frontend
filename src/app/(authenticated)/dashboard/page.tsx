@@ -13,16 +13,16 @@ export default function Dashboard() {
   return (
     <div>
       <div className="flex">
-        <section className="w-1/4 border-r-4 border-secondary fixed h-screen">
+        <section className="w-1/4 border-r-4 border-secondary fixed h-screen lg:block hidden">
           <SideBarDashboard setSelectedItem={setSelectedItem} />
         </section>
 
-        <div className="w-3/4 ml-[25%] ml-1/4 flex text-center justify-center">
-          {/* {selectedItem === "Feed" && <Feed />} */}
-          {selectedItem === "Message" && <Message />}     
-        </div>
+        <div className="w-full lg:w-3/4 lg:ml-[25%] flex text-center justify-center lg:block">
+    {selectedItem === "Feed" && <Feed />}
+    {selectedItem === "Message" && <Message />}     
+</div>
+
       </div>
     </div>
   );
 }
-
